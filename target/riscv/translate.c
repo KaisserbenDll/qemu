@@ -130,6 +130,15 @@ static void lookup_and_goto_ptr(DisasContext *ctx)
 
 static void gen_exception_illegal(DisasContext *ctx)
 {
+#if defined(TARGET_RISCV64)
+    TCGv_i64 helper_tmp = tcg_const_i64(ctx->opcode);
+    tcg_gen_st_tl(helper_tmp, cpu_env, offsetof(CPURISCVState, bins));
+    tcg_temp_free_i64(helper_tmp);
+#else
+    TCGv_i32 helper_tmp = tcg_const_i32(ctx->opcode);
+    tcg_gen_st_tl(helper_tmp, cpu_env, offsetof(CPURISCVState, bins));
+    tcg_temp_free_i32(helper_tmp);
+#endif
     generate_exception(ctx, RISCV_EXCP_ILLEGAL_INST);
 }
 
@@ -624,6 +633,9 @@ static bool gen_arith_div_w(DisasContext *ctx, arg_r *a,
     TCGv source1, source2;
     source1 = tcg_temp_new();
     source2 = tcg_temp_new();
+
+    /* Store the opcode code incase we need it for mtval/stval. */
+    env->bins = ctx->opcode;
 
     gen_get_gpr(source1, a->rs1);
     gen_get_gpr(source2, a->rs2);
