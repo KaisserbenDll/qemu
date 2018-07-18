@@ -145,6 +145,8 @@ static void rv32gcsu_priv1_10_0_cpu_init(Object *obj)
     set_resetvec(env, DEFAULT_RSTVEC);
     set_feature(env, RISCV_FEATURE_MMU);
     set_feature(env, RISCV_FEATURE_PMP);
+    set_feature(env, RISCV_FEATURE_MTVAL_INST);
+    set_feature(env, RISCV_FEATURE_STVAL_INST);
 }
 
 static void rv32imacu_nommu_cpu_init(Object *obj)
@@ -183,6 +185,8 @@ static void rv64gcsu_priv1_10_0_cpu_init(Object *obj)
     set_resetvec(env, DEFAULT_RSTVEC);
     set_feature(env, RISCV_FEATURE_MMU);
     set_feature(env, RISCV_FEATURE_PMP);
+    set_feature(env, RISCV_FEATURE_MTVAL_INST);
+    set_feature(env, RISCV_FEATURE_STVAL_INST);
 }
 
 static void rv64imacu_nommu_cpu_init(Object *obj)
