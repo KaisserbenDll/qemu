@@ -41,10 +41,15 @@ static const struct MemmapEntry {
     [IBEX_PINMUX] =         {  0x40070000,  0x10000 },
     [IBEX_RV_TIMER] =       {  0x40080000,  0x10000 },
     [IBEX_PLIC] =           {  0x40090000,  0x10000 },
+    [IBEX_PWRMGR] =         {  0x400A0000,  0x10000 },
+    [IBEX_RSTMGR] =         {  0x400B0000,  0x10000 },
+    [IBEX_CLKMGR] =         {  0x400C0000,  0x10000 },
     [IBEX_AES] =            {  0x40110000,  0x10000 },
     [IBEX_HMAC] =           {  0x40120000,  0x10000 },
     [IBEX_ALERT_HANDLER] =  {  0x40130000,  0x10000 },
-    [IBEX_USBDEV] =         {  0x40150000,  0x10000 }
+    [IBEX_NMI_GEN] =        {  0x40140000,  0x10000 },
+    [IBEX_USBDEV] =         {  0x40150000,  0x10000 },
+    [IBEX_PADCTRL] =        {  0x40160000,  0x10000 }
 };
 
 static void riscv_opentitan_init(MachineState *machine)
@@ -167,6 +172,12 @@ static void riscv_lowrisc_ibex_soc_realize(DeviceState *dev_soc, Error **errp)
         memmap[IBEX_FLASH_CTRL].base, memmap[IBEX_FLASH_CTRL].size);
     create_unimplemented_device("riscv.lowrisc.ibex.rv_timer",
         memmap[IBEX_RV_TIMER].base, memmap[IBEX_RV_TIMER].size);
+    create_unimplemented_device("riscv.lowrisc.ibex.pwrmgr",
+        memmap[IBEX_PWRMGR].base, memmap[IBEX_PWRMGR].size);
+    create_unimplemented_device("riscv.lowrisc.ibex.rstmgr",
+        memmap[IBEX_RSTMGR].base, memmap[IBEX_RSTMGR].size);
+    create_unimplemented_device("riscv.lowrisc.ibex.clkmgr",
+        memmap[IBEX_CLKMGR].base, memmap[IBEX_CLKMGR].size);
     create_unimplemented_device("riscv.lowrisc.ibex.aes",
         memmap[IBEX_AES].base, memmap[IBEX_AES].size);
     create_unimplemented_device("riscv.lowrisc.ibex.hmac",
@@ -175,8 +186,12 @@ static void riscv_lowrisc_ibex_soc_realize(DeviceState *dev_soc, Error **errp)
         memmap[IBEX_PINMUX].base, memmap[IBEX_PINMUX].size);
     create_unimplemented_device("riscv.lowrisc.ibex.alert_handler",
         memmap[IBEX_ALERT_HANDLER].base, memmap[IBEX_ALERT_HANDLER].size);
-    create_unimplemented_device("riscv.lowrisc.ibex.USBDEV",
+    create_unimplemented_device("riscv.lowrisc.ibex.nmi_gen",
+        memmap[IBEX_NMI_GEN].base, memmap[IBEX_NMI_GEN].size);
+    create_unimplemented_device("riscv.lowrisc.ibex.usbdev",
         memmap[IBEX_USBDEV].base, memmap[IBEX_USBDEV].size);
+    create_unimplemented_device("riscv.lowrisc.ibex.padctrl",
+        memmap[IBEX_PADCTRL].base, memmap[IBEX_PADCTRL].size);
 }
 
 static void riscv_lowrisc_ibex_soc_class_init(ObjectClass *oc, void *data)
